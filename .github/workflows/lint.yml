@@ -33,11 +33,12 @@ jobs:
                         ~/.cache/pip
                     key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
-#            -   name: Cache minio client
-#                uses: actions/cache@v2
-#                with:
-#                    path: mc
-#                    key: ${{ runner.os }}-${{ hashFiles('**/mc') }}
+            -   name: Cache minio client
+                id: cache-mcli
+                uses: actions/cache@v2
+                with:
+                    path: /home/runner/work/ekko/ekko/mc
+                    key: ${{ runner.os }}
 
             -   name: Set up Python ${{ matrix.python-version }}
                 uses: actions/setup-python@v2
@@ -51,16 +52,15 @@ jobs:
                     poetry install --no-interaction
 
             -   name: Get mcli
+                if: steps.cache-mcli.outputs.cache-hit != 'true'
                 run: |
                     wget https://dl.min.io/client/mc/release/linux-amd64/mc
                     chmod +x mc
-                    pwd
-                    file mc
 
             -   name: Create bucket
                 run: |
                     ./mc config host add minio http://localhost:9000
-                    ./mc mb minio/ekko
+                    ./mc mb ekko
 
             -   name: Lint with flake8
                 run: |
