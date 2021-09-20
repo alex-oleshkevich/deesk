@@ -73,7 +73,6 @@ jobs:
 
             -   name: Create bucket
                 run: |
-                    ./mc admin info minio
                     ./mc alias set minio http://localhost:9000 minioadmin minioadmin
                     ./mc mb minio/ekko
 
