@@ -56,11 +56,11 @@ jobs:
                     chmod +x mc
                     pwd
                     file mc
-                    ./mc config host add minio http://localhost:9000
 
             -   name: Create bucket
                 run: |
-                    docker run --rm minio/mc mb ekko
+                    ./mc config host add minio http://localhost:9000
+                    ./mc mb minio/ekko
 
             -   name: Lint with flake8
                 run: |
@@ -74,6 +74,6 @@ jobs:
                 run: |
                     black --check ekko tests
 
-            -   name: Test with pytest
-                run: |
-                    pytest --no-cov-on-fail --cov ekko --cov tests
+#            -   name: Test with pytest
+#                run: |
+#                    pytest --no-cov-on-fail --cov ekko --cov tests
