@@ -13,7 +13,7 @@ class File:
         self._reader = reader
         self._mode = mode
 
-    async def read(self, size: int = -1) -> t.AnyStr:
+    async def read(self, size: int = -1) -> t.Union[str, bytes]:
         chunk = await self._reader.read(size)
         if 'b' in self._mode:
             return chunk
@@ -40,8 +40,8 @@ class Storage:
     async def get(self, path: t.Union[str, PathLike], mode: str = 'rb') -> File:
         return File(await self._driver.read(str(path)), mode)
 
-    async def put(self, path: t.Union[str, PathLike], data: t.Union[t.AnyStr], mode: str = 'wb') -> None:
-        if isinstance(data, str) and 'b' in mode:
+    async def put(self, path: t.Union[str, PathLike], data: t.Union[str, bytes, t.IO[bytes]]) -> None:
+        if isinstance(data, str):
             data = data.encode()
 
         if isinstance(data, bytes):
