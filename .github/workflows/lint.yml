@@ -63,10 +63,8 @@ jobs:
                     chmod +x mc
 
             -   name: Create bucket
-                env:
-                    MINIO_ROOT_USER: minioadmin
-                    MINIO_ROOT_PASSWORD: minioadmin
                 run: |
+                    ./mc admin info minio
                     ./mc alias set minio http://localhost:9000 minioadmin minioadmin
                     ./mc mb minio/ekko
 
