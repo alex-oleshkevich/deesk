@@ -5,9 +5,9 @@ name: Lint
 
 on:
     push:
-        branches: [master]
+        branches: [ master ]
     pull_request:
-        branches: [master]
+        branches: [ master ]
 
 jobs:
     build:
@@ -15,34 +15,46 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                python-version: [' 3.7', '3.8', '3.9', '3.10.0-rc.1']
+                python-version: [ ' 3.7', '3.8', '3.9', '3.10.0-rc.1' ]
 
+        services:
+            minio:
+                image: minio/minio:latest
+                ports:
+                    - 9000:9000
+                    - 9001:9001
+                env:
+                    MINIO_ROOT_USER: admin
+                    MINIO_ROOT_PASSWORD: adminadmin
+                    MINIO_DEFAULT_BUCKETS: ekko
         steps:
-            - uses: actions/checkout@v2
+            -   uses: actions/checkout@v2
 
-            - name: Set up Python ${{ matrix.python-version }}
-              uses: actions/setup-python@v2
-              with:
-                  python-version: ${{ matrix.python-version }}
+            -   name: Set up Python ${{ matrix.python-version }}
+                uses: actions/setup-python@v2
+                with:
+                    python-version: ${{ matrix.python-version }}
 
-            - name: Install dependencies
-              run: |
-                  python -m pip install --upgrade pip poetry
-                  poetry config virtualenvs.create false
-                  poetry install --no-interaction
+            -   name: Install dependencies
+                run: |
+                    python -m pip install --upgrade pip poetry
+                    poetry config virtualenvs.create false
+                    poetry install --no-interaction
 
-            - name: Lint with flake8
-              run: |
-                  flake8 ekko tests
+            -   name: Lint with flake8
+                run: |
+                    flake8 ekko tests
 
-            - name: Lint with mypy
-              run: |
-                  mypy ekko/
+            -   name: Lint with mypy
+                run: |
+                    mypy ekko/
 
-            - name: Lint with black
-              run: |
-                  black --check ekko tests
+            -   name: Lint with black
+                run: |
+                    black --check ekko tests
 
-            - name: Test with pytest
-              run: |
-                  pytest --no-cov-on-fail --cov ekko --cov tests
+            -   name: Test with pytest
+                env:
+                    AWS_ENDPOINT_URL: http://minio:9000
+                run: |
+                    pytest --no-cov-on-fail --cov ekko --cov tests

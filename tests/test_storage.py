@@ -1,3 +1,4 @@
+import io
 import pytest
 
 from ekko.storage import Storage
@@ -33,5 +34,18 @@ async def test_text_content(driver):
     await fs.put('project/user/book.txt', 'Hello World')
     async with await fs.get('project/user/book.txt', 'r') as f:
         assert await f.read() == 'Hello World'
+
+    await fs.delete('project/user/book.txt')
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('driver', drivers)
+async def test_bytes_io_stream_content(driver):
+    fs = Storage(driver)
+
+    stream = io.BytesIO(b'hello')
+    await fs.put('project/user/book.txt', stream)
+    async with await fs.get('project/user/book.txt') as f:
+        assert await f.read() == b'hello'
 
     await fs.delete('project/user/book.txt')

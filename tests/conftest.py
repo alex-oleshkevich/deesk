@@ -1,6 +1,5 @@
 import base64
 import os
-
 import pytest
 
 from ekko.drivers.fs import LocalFsDriver
@@ -8,9 +7,9 @@ from ekko.drivers.memory import MemoryDriver
 from ekko.drivers.s3 import S3Driver
 
 # requires local https://min.io instance
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY', '0EAR739BPZJF98ECAFPC')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', 'RGKgLxWlSZsaV37LcS9amKLKjWLkjsa+Mim24CA1')
-AWS_REGION_NAME = os.environ.get('AWS_REGION_NAME', None)
+AWS_ACCESS_KEY_ID = 'admin'
+AWS_SECRET_ACCESS_KEY = 'adminadmin'
+AWS_REGION_NAME = None
 AWS_ENDPOINT_URL = os.environ.get('AWS_ENDPOINT_URL', 'http://localhost:9000')
 
 drivers = [
