@@ -43,13 +43,13 @@ jobs:
 
             -   name: Run minio
                 run: |
-                    docker run
-                        -d
-                        --rm
-                        --name minio
-                        -p 9000:9000
-                        -p 9001:9001
-                        -e MINIO_DEFAULT_BUCKETS=ekko
+                    docker run \
+                        -d \
+                        --rm \
+                        --name minio \
+                        -p 9000:9000 \
+                        -p 9001:9001 \
+                        -e MINIO_DEFAULT_BUCKETS=ekko \
                     minio/minio:latest server --console-address ":9001" /data
 
             -   name: Create bucket
