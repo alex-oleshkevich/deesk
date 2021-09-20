@@ -42,12 +42,19 @@ jobs:
                     poetry install --no-interaction
 
             -   name: Run minio
-                env:
-                    MINIO_ROOT_USER: admin
-                    MINIO_ROOT_PASSWORD: adminadmin
-                    MINIO_DEFAULT_BUCKETS: ekko
                 run: |
-                    docker run --name minio --rm -p 9000:9000 -p 9001:9001 minio/minio:latest server --console-address ":9001" /data
+                    docker run
+                        -d
+                        --rm
+                        --name minio
+                        -p 9000:9000
+                        -p 9001:9001
+                        -e MINIO_DEFAULT_BUCKETS=ekko
+                    minio/minio:latest server --console-address ":9001" /data
+
+            -   name: Create bucket
+                run: |
+                    docker run --rm minio/mc mb ekko
 
             -   name: Lint with flake8
                 run: |

@@ -7,8 +7,8 @@ from ekko.drivers.memory import MemoryDriver
 from ekko.drivers.s3 import S3Driver
 
 # requires local https://min.io instance
-AWS_ACCESS_KEY_ID = 'admin'
-AWS_SECRET_ACCESS_KEY = 'adminadmin'
+AWS_ACCESS_KEY_ID = 'minioadmin'
+AWS_SECRET_ACCESS_KEY = 'minioadmin'
 AWS_REGION_NAME = None
 AWS_ENDPOINT_URL = os.environ.get('AWS_ENDPOINT_URL', 'http://localhost:9000')
 
