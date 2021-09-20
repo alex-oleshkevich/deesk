@@ -16,17 +16,6 @@ jobs:
             fail-fast: false
             matrix:
                 python-version: [ '3.8', '3.9', '3.10.0-rc.1' ]
-
-#        services:
-#            minio:
-#                image: minio/minio:latest
-#                ports:
-#                    - 9000:9000
-#                    - 9001:9001
-#                env:
-#                    MINIO_ROOT_USER: admin
-#                    MINIO_ROOT_PASSWORD: adminadmin
-#                    MINIO_DEFAULT_BUCKETS: ekko
         steps:
             -   uses: actions/checkout@v2
 
@@ -47,10 +36,9 @@ jobs:
                         -d \
                         --rm \
                         --name minio \
-                        -- network host \
+                        --network host \
                         -p 9000:9000 \
                         -p 9001:9001 \
-                        -e MINIO_DEFAULT_BUCKETS=ekko \
                     minio/minio:latest server --console-address ":9001" /data
 
             -   name: Create bucket
