@@ -12,15 +12,6 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-        services:
-            minio:
-                image: minio/minio:latest
-                env:
-                    MINIO_ROOT_USER: minioadmin
-                    MINIO_ROOT_PASSWORD: minioadmin
-                ports:
-                    - 9000:9000
-                    - 9001:9001
         strategy:
             fail-fast: false
             matrix:
@@ -48,16 +39,16 @@ jobs:
                 with:
                     python-version: ${{ matrix.python-version }}
 
-#            -   name: Run minio
-#                run: |
-#                    docker run -d \
-#                        -p 9000:9000 \
-#                        -p 9001:9001 \
-#                        -e MINIO_ROOT_USER=minioadmin \
-#                        -e MINIO_ROOT_PASSWORD=minioadmin \
-#                        --name minio \
-#                        --network host \
-#                        minio/minio:latest server /data
+            -   name: Run minio
+                run: |
+                    docker run -d \
+                        -p 9000:9000 \
+                        -p 9001:9001 \
+                        -e MINIO_ROOT_USER=minioadmin \
+                        -e MINIO_ROOT_PASSWORD=minioadmin \
+                        --name minio \
+                        --network host \
+                        minio/minio:latest server /data
 
             -   name: Install dependencies
                 run: |
@@ -73,7 +64,7 @@ jobs:
 
             -   name: Create bucket
                 run: |
-                    ./mc alias set minio http://minio:9000 minioadmin minioadmin
+                    ./mc alias set minio http://localhost:9000 minioadmin minioadmin
                     ./mc mb minio/ekko
 
             -   name: Lint with flake8
