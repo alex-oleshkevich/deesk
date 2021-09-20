@@ -56,14 +56,14 @@ jobs:
 
             -   name: Get mcli
                 if: steps.cache-mcli.outputs.cache-hit != 'true'
-                env:
-                    MINIO_ROOT_USER: minioadmin
-                    MINIO_ROOT_PASSWORD: minioadmin
                 run: |
                     wget https://dl.min.io/client/mc/release/linux-amd64/mc
                     chmod +x mc
 
             -   name: Create bucket
+                env:
+                    MINIO_ROOT_USER: minioadmin
+                    MINIO_ROOT_PASSWORD: minioadmin
                 run: |
                     ./mc config host add minio http://localhost:9000
                     ./mc mb minio/ekko
