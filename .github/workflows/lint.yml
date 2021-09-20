@@ -15,6 +15,9 @@ jobs:
         services:
             minio:
                 image: minio/minio:edge-cicd
+                env:
+                    MINIO_ROOT_USER: minioadmin
+                    MINIO_ROOT_PASSWORD: minioadmin
                 ports:
                     - 9000:9000
                     - 9001:9001
@@ -53,6 +56,9 @@ jobs:
 
             -   name: Get mcli
                 if: steps.cache-mcli.outputs.cache-hit != 'true'
+                env:
+                    MINIO_ROOT_USER: minioadmin
+                    MINIO_ROOT_PASSWORD: minioadmin
                 run: |
                     wget https://dl.min.io/client/mc/release/linux-amd64/mc
                     chmod +x mc
