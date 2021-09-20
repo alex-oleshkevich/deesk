@@ -25,6 +25,20 @@ jobs:
         steps:
             -   uses: actions/checkout@v2
 
+            -   name: Cache poetry
+                uses: actions/cache@v2
+                with:
+                    path: |
+                        ~/.cache/pypoetry
+                        ~/.cache/pip
+                    key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+#            -   name: Cache minio client
+#                uses: actions/cache@v2
+#                with:
+#                    path: mc
+#                    key: ${{ runner.os }}-${{ hashFiles('**/mc') }}
+
             -   name: Set up Python ${{ matrix.python-version }}
                 uses: actions/setup-python@v2
                 with:
@@ -40,6 +54,8 @@ jobs:
                 run: |
                     wget https://dl.min.io/client/mc/release/linux-amd64/mc
                     chmod +x mc
+                    pwd
+                    file mc
                     ./mc config host add minio http://localhost:9000
 
             -   name: Create bucket
