@@ -67,7 +67,7 @@ jobs:
                     MINIO_ROOT_USER: minioadmin
                     MINIO_ROOT_PASSWORD: minioadmin
                 run: |
-                    ./mc config host add minio http://localhost:9000
+                    ./mc alias set minio http://localhost:9000 minioadmin minioadmin
                     ./mc mb minio/ekko
 
             -   name: Lint with flake8
