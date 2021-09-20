@@ -4,7 +4,7 @@ import typing as t
 from ..protocols import FileReader
 
 
-class Driver(abc.ABC):
+class Driver(abc.ABC):  # pragma: no cover
     @abc.abstractmethod
     async def write(self, path: str, data: t.IO[bytes]) -> None:
         raise NotImplementedError

@@ -4,7 +4,7 @@ import typing as t
 from types import TracebackType
 
 
-class FileReader(t.Protocol):
+class FileReader(t.Protocol):  # pragma: no cover
     async def read(self, size: int = -1) -> bytes:
         ...
 
