@@ -47,6 +47,7 @@ jobs:
                         -d \
                         --rm \
                         --name minio \
+                        -- network host \
                         -p 9000:9000 \
                         -p 9001:9001 \
                         -e MINIO_DEFAULT_BUCKETS=ekko \
@@ -69,8 +70,6 @@ jobs:
                     black --check ekko tests
 
             -   name: Test with pytest
-                env:
-                    AWS_ENDPOINT_URL: http://minio:9000
                 run: |
                     pytest --no-cov-on-fail --cov ekko --cov tests
 
