@@ -73,7 +73,7 @@ jobs:
 
             -   name: Create bucket
                 run: |
-                    ./mc alias set minio http://localhost:9000 minioadmin minioadmin
+                    ./mc alias set minio http://minio:9000 minioadmin minioadmin
                     ./mc mb minio/ekko
 
             -   name: Lint with flake8
