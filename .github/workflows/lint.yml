@@ -74,6 +74,6 @@ jobs:
                 run: |
                     black --check ekko tests
 
-#            -   name: Test with pytest
-#                run: |
-#                    pytest --no-cov-on-fail --cov ekko --cov tests
+            -   name: Test with pytest
+                run: |
+                    pytest --no-cov-on-fail --cov ekko --cov tests
