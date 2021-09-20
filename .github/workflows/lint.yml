@@ -12,6 +12,12 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        services:
+            minio:
+                image: minio/minio:edge-cicd
+                ports:
+                    - 9000:9000
+                    - 9001:9001
         strategy:
             fail-fast: false
             matrix:
@@ -30,16 +36,11 @@ jobs:
                     poetry config virtualenvs.create false
                     poetry install --no-interaction
 
-            -   name: Run minio
+            -   name: Get mcli
                 run: |
-                    docker run \
-                        -d \
-                        --rm \
-                        --name minio \
-                        --network host \
-                        -p 9000:9000 \
-                        -p 9001:9001 \
-                    minio/minio:latest server --console-address ":9001" /data
+                    wget https://dl.min.io/client/mc/release/linux-amd64/mc
+                    chmod +x mc
+                    ./mc config host add minio http://minio:9000
 
             -   name: Create bucket
                 run: |
@@ -60,8 +61,3 @@ jobs:
             -   name: Test with pytest
                 run: |
                     pytest --no-cov-on-fail --cov ekko --cov tests
-
-            -   name: Stop minio
-                run: |
-                    docker stop minio
-                    docker rm minio
