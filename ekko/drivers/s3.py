@@ -1,9 +1,8 @@
 from __future__ import annotations
 
+import aioboto3
 import mimetypes
 import typing as t
-
-import aioboto3
 from botocore.exceptions import ClientError
 
 from ekko.drivers.base import Driver
@@ -23,16 +22,23 @@ class S3Driver(Driver):
         self.bucket = bucket
         self.endpoint_url = endpoint_url
         self.session = aioboto3.Session(
-            aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key,
-            region_name=region_name, profile_name=profile_name,
+            aws_access_key_id=aws_access_key_id,
+            aws_secret_access_key=aws_secret_access_key,
+            region_name=region_name,
+            profile_name=profile_name,
         )
 
     async def write(self, path: str, data: t.IO[bytes]) -> None:
         mime_type = mimetypes.guess_type(path)
         async with self.session.client('s3', endpoint_url=self.endpoint_url) as client:
-            await client.upload_fileobj(data, self.bucket, path, ExtraArgs={
-                'ContentType': mime_type[0],
-            })
+            await client.upload_fileobj(
+                data,
+                self.bucket,
+                path,
+                ExtraArgs={
+                    'ContentType': mime_type[0],
+                },
+            )
 
     async def read(self, path: str) -> FileReader:
         async with self.session.client('s3', endpoint_url=self.endpoint_url) as client:
