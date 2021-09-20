@@ -40,7 +40,7 @@ jobs:
                 run: |
                     wget https://dl.min.io/client/mc/release/linux-amd64/mc
                     chmod +x mc
-                    ./mc config host add minio http://minio:9000
+                    ./mc config host add minio http://localhost:9000
 
             -   name: Create bucket
                 run: |
