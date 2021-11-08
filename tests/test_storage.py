@@ -1,13 +1,14 @@
 import io
 import pytest
 
+from ekko.drivers.base import Driver
 from ekko.storage import Storage
 from tests.conftest import drivers
 
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize('driver', drivers)
-async def test_get_put_exists_delete(driver, image):
+async def test_get_put_exists_delete(driver: Driver, image: bytes) -> None:
     fs = Storage(driver)
 
     # load binary file
@@ -28,7 +29,7 @@ async def test_get_put_exists_delete(driver, image):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize('driver', drivers)
-async def test_text_content(driver):
+async def test_text_content(driver: Driver) -> None:
     fs = Storage(driver)
 
     await fs.put('project/user/book.txt', 'Hello World')
@@ -40,7 +41,7 @@ async def test_text_content(driver):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize('driver', drivers)
-async def test_bytes_io_stream_content(driver):
+async def test_bytes_io_stream_content(driver: Driver) -> None:
     fs = Storage(driver)
 
     stream = io.BytesIO(b'hello')
