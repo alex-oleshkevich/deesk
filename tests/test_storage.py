@@ -1,13 +1,15 @@
 import io
 import pytest
+from moto import mock_s3
 
-from ekko.drivers.base import Driver
-from ekko.storage import Storage
+from deesk.drivers.base import Driver
+from deesk.storage import Storage
 from tests.conftest import drivers
 
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize('driver', drivers)
+@mock_s3
 async def test_get_put_exists_delete(driver: Driver, image: bytes) -> None:
     fs = Storage(driver)
 
@@ -29,6 +31,7 @@ async def test_get_put_exists_delete(driver: Driver, image: bytes) -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize('driver', drivers)
+@mock_s3
 async def test_text_content(driver: Driver) -> None:
     fs = Storage(driver)
 
@@ -41,6 +44,7 @@ async def test_text_content(driver: Driver) -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize('driver', drivers)
+@mock_s3
 async def test_bytes_io_stream_content(driver: Driver) -> None:
     fs = Storage(driver)
 

@@ -2,9 +2,9 @@ import base64
 import os
 import pytest
 
-from ekko.drivers.fs import LocalFsDriver
-from ekko.drivers.memory import MemoryDriver
-from ekko.drivers.s3 import S3Driver
+from deesk.drivers.fs import LocalFsDriver
+from deesk.drivers.memory import MemoryDriver
+from deesk.drivers.s3 import S3Driver
 
 # requires local https://min.io instance
 AWS_ACCESS_KEY_ID = 'minioadmin'
@@ -16,7 +16,7 @@ drivers = [
     LocalFsDriver(base_dir='/tmp'),
     MemoryDriver(),
     S3Driver(
-        bucket='ekko',
+        bucket='deesk',
         aws_access_key_id=AWS_ACCESS_KEY_ID,
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         region_name=AWS_REGION_NAME,

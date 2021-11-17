@@ -4,8 +4,8 @@ import io
 import typing as t
 from os import PathLike
 
-from ekko.drivers.base import Driver
-from ekko.protocols import FileReader
+from deesk.drivers.base import Driver
+from deesk.protocols import FileReader
 
 
 class TmpFile:

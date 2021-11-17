@@ -32,7 +32,7 @@ jobs:
                 id: cache-mcli
                 uses: actions/cache@v2
                 with:
-                    path: /home/runner/work/ekko/ekko/mc
+                    path: /home/runner/work/deesk/deesk/mc
                     key: ${{ runner.os }}
 
             -   name: Set up Python ${{ matrix.python-version }}
@@ -66,11 +66,11 @@ jobs:
             -   name: Create bucket
                 run: |
                     ./mc alias set minio http://localhost:9000 minioadmin minioadmin
-                    ./mc mb minio/ekko
+                    ./mc mb minio/deesk
 
             -   name: Lint with flake8
                 run: |
-                    flake8 ekko/ tests/
+                    flake8 deesk/ tests/
 
             -   name: Lint with mypy
                 run: |
@@ -78,8 +78,8 @@ jobs:
 
             -   name: Lint with black
                 run: |
-                    black --config=pyproject.toml --check ekko/ tests/
+                    black --config=pyproject.toml --check deesk/ tests/
 
             -   name: Test with pytest
                 run: |
-                    pytest --no-cov-on-fail --cov ekko --cov tests
+                    pytest --no-cov-on-fail --cov deesk --cov tests

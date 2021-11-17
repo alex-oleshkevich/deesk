@@ -1,10 +1,9 @@
+import anyio
 import typing as t
 from os import PathLike
 
-import anyio
-
-from .base import Driver
 from ..protocols import FileReader
+from .base import Driver
 
 
 class LocalFsDriver(Driver):

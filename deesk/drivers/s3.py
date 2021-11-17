@@ -5,8 +5,8 @@ import mimetypes
 import typing as t
 from botocore.exceptions import ClientError
 
-from ekko.drivers.base import Driver
-from ekko.protocols import FileReader
+from deesk.drivers.base import Driver
+from deesk.protocols import FileReader
 
 
 class S3Driver(Driver):

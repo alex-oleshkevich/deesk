@@ -29,9 +29,9 @@ class File:
 
 class Storage:
     _driver_map: t.Dict[str, str] = {
-        'local': 'ekko.drivers.fs.LocalFsDriver',
-        'memory': 'ekko.drivers.memory.MemoryDriver',
-        's3': 'ekko.drivers.s3.S3Driver',
+        'local': 'deesk.drivers.fs.LocalFsDriver',
+        'memory': 'deesk.drivers.memory.MemoryDriver',
+        's3': 'deesk.drivers.s3.S3Driver',
     }
 
     def __init__(self, driver: Driver) -> None:
